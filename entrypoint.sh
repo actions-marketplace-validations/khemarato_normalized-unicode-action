@@ -15,7 +15,7 @@ echo "Now in $GITHUB_WORKSPACE"
 
 git show
 
-IFS=$'\n'
+# IFS=$'\n'
 for file in `git diff-tree --no-commit-id --name-only -r HEAD`; do
     if [ -f $file ]; then
         echo "Found \"$file\""
