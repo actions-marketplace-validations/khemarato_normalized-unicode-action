@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Prefered exit code is: $2"
+
 echo "Using Unicode converter at:"
 if ! command -v uconv; then
     echo "Please install the uconv command"
@@ -31,9 +33,9 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
         uconv -x "$1" "$file" > $HOME/tmp
         if cmp -s $HOME/tmp "$file"; then
             rm $HOME/tmp
-            echo "...done"
+            echo "...okay"
         else
-            echo "...modifying \"$file\""
+            echo "...IN NEED OF NORMALIZATION"
             mv -f $HOME/tmp "$file"
             modified=true
         fi
@@ -43,12 +45,14 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
 done
 
 if $modified; then
-    echo "Found files in need of modification:"
-    git status
-    echo "Committing those changes now:"
-    git commit -am "Fix naughty unicode files"
-    git push --dry-run
-    exit 1
+    echo "Found files in need of modification!"
+    REMOTE_REPO="https://${GITHUB_ACTOR}:${ACTIONS_RUNTIME_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+    git config user.name "${GITHUB_ACTOR}"
+    git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    git add .
+    git commit -m "Fix it"
+    git push --dry-run $REMOTE_REPO
+    exit $2
 else
     echo "Everything looks good!"
     exit 0

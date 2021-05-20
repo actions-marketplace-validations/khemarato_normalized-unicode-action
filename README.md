@@ -8,15 +8,21 @@ This action requires the `checkout` action be run before it with a depth of 2, a
 
 ### `transliteration`
 
-**Required** The name of the Unicode transliteration scheme you'd like to consider "normal".
+The name of the Unicode transliteration scheme you'd like to consider "normal".
 
 **Default**: `Any-NFC`
+
+### `exit_code`
+ 
+The exit status if a file is found in need of normalization
+
+**Default**: 1
 
 ## Outputs
 
 ### Exit status
 
-Exits with code `1` if there's an error, `0` otherwise.
+Exits with code `exit_code` if there's an error, `0` otherwise.
 
 ## Example usage
 
@@ -27,6 +33,7 @@ Exits with code `1` if there's an error, `0` otherwise.
 - uses: buddhist-uni/normalized-unicode-action
   with:
     transliteration: Any-NFC
+    exit_code: 1
 ```
 
 Unicode NFD 

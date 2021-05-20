@@ -5,8 +5,14 @@ inputs:
     description: 'The Unicode style you would like to consider standard'
     required: true
     default: 'Any-NFC'
+  exit_code:
+    description: 'What exit status code should it use if a file was found in need of normalization?'
+    required: true
+    default: 1
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.transliteration }}
+    - ${{ inputs.exit_code }}
+
