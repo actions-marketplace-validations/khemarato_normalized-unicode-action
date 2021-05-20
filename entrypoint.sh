@@ -24,12 +24,11 @@ fi
 
 modified=false
 IFS=$'\n'
-echo "I hope $HOME != $GITHUB_WORKSPACE..."
 for file in `isutf8 -i $TOUCHED_FILES`; do
     if [ -f $file ]; then
         echo "Analyzing \"$file\"..."
         uconv -x "$1" "$file" > $HOME/tmp
-        if cmp --silent $HOME/tmp "$file"; then
+        if cmp -s $HOME/tmp "$file"; then
             rm $HOME/tmp
         else
             echo "...Modifying \"$file\""
@@ -40,4 +39,6 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
         echo "Looked for but couldn't find \"$file\". Perhaps it was removed by that commit?"
     fi
 done
+
+echo "$GITHUB_TOKEN or maybe $ACTIONS_RUNTIME_TOKEN"
 
