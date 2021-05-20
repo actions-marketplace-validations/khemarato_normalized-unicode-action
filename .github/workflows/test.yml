@@ -11,5 +11,7 @@ jobs:
       - name: Run the Action
         id: mine
         uses: buddhist-uni/normalized-unicode-action@main
+        with:
+          transliteration: does not exist
       - name: Display the result
         run: echo "Outcome=${{ steps.mine.outcome }} Conclusion=${{ steps.mine.conclusion }}"

@@ -30,8 +30,9 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
         uconv -x "$1" "$file" > $HOME/tmp
         if cmp -s $HOME/tmp "$file"; then
             rm $HOME/tmp
+            echo "...done"
         else
-            echo "...Modifying \"$file\""
+            echo "...modifying \"$file\""
             mv -f $HOME/tmp "$file"
             modified=true
         fi
@@ -40,5 +41,13 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
     fi
 done
 
-echo "$GITHUB_TOKEN or maybe $ACTIONS_RUNTIME_TOKEN"
+if $modified; then
+    git status
+    git commit -am "Fix naughty unicode files"
+    git push --dry-run
+    exit 1
+else
+    echo "Everything looks good!"
+    exit 0
+fi
 
