@@ -1,14 +1,15 @@
 #!/bin/bash
 
-echo "Using transliterator \"$1\""
-
+echo "Using Unicode converter at:"
 if ! command -v uconv; then
     echo "Please install the uconv command"
     exit 1
 fi
+
+echo "\nUsing transliterator:\n\"$1\""
 TRANSLITS=`uconv -L`
 if [[ ${TRANSLITS} != *" $1 "* ]]; then
-    echo "But \"$1\" is not a valid transliterator."
+    echo "...except \"$1\" does not exist."
     echo "Available transliterators are: $TRANSLITS"
     exit 1
 fi
