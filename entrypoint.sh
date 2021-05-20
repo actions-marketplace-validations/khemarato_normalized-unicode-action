@@ -62,7 +62,7 @@ if $modified; then
         git add .
         git commit -m "$COMMIT_PREFIX $1"
         git push $REMOTE_REPO
-        echo "Successfully pushed!"
+        echo "Successfully pushed? $?"
     fi
     exit $2
 else
