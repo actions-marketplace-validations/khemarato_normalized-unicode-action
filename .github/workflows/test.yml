@@ -7,7 +7,7 @@ jobs:
       - name: Get the code
         uses: actions/checkout@v2
         with:
-            fetch-depth: 2
+            fetch-depth: 1
       - name: Run the Action
         id: mine
         uses: buddhist-uni/normalized-unicode-action@main
