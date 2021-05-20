@@ -12,6 +12,7 @@ fi
 
 cd $GITHUB_WORKSPACE
 echo "Now in $GITHUB_WORKSPACE"
+ls -a
 
 IFS=$'\n'
 for file in `git diff-tree --no-commit-id --name-only -r HEAD`; do

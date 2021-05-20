@@ -2,7 +2,7 @@ on: [push]
 jobs:
   helloworld:
     runs-on: ubuntu-latest
-    name: Seeing if this works
+    name: Test on self
     steps:
       - name: Get the code
         uses: actions/checkout@v2
