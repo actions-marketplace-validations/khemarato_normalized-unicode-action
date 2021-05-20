@@ -12,6 +12,12 @@ The name of the Unicode transliteration scheme you'd like to consider "normal".
 
 **Default**: `Any-NFC`
 
+### `commit_fix`
+
+Whether it should automatically commit a fix for the offending file(s).
+
+**Default**: false
+
 ### `exit_code`
  
 The exit status if a file is found in need of normalization

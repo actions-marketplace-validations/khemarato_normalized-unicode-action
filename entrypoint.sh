@@ -1,5 +1,7 @@
 #!/bin/bash
 
+COMMIT_PREFIX="[normalized-unicode-action] Auto-Normalize to"
+
 echo "Prefered exit code is: $2"
 
 echo "Using Unicode converter at:"
@@ -17,6 +19,12 @@ if [[ ${TRANSLITS} != *" $1 "* ]]; then
 fi
 
 cd $GITHUB_WORKSPACE
+
+LAST_COMMIT_MSG=`git log --format=%B -n 1 HEAD`
+if [[ ${LAST_COMMIT_MSG} == *"$COMMIT_PREFIX"* ]]; then
+    echo "Last commit is one of mine! Nvm :)"
+    exit 0
+fi
 
 TOUCHED_FILES=`git diff-tree --no-commit-id --name-only -r HEAD`
 if [ -z "$TOUCHED_FILES" ]; then
@@ -46,12 +54,16 @@ done
 
 if $modified; then
     echo "Found files in need of modification!"
-    REMOTE_REPO="https://${GITHUB_ACTOR}:${ACTIONS_RUNTIME_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-    git config user.name "${GITHUB_ACTOR}"
-    git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-    git add .
-    git commit -m "Fix it"
-    git push --dry-run $REMOTE_REPO
+    if $3; then
+        echo "Committing changes:"
+        REMOTE_REPO="https://${GITHUB_ACTOR}:${ACTIONS_RUNTIME_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git add .
+        git commit -m "$COMMIT_PREFIX $1"
+        git push $REMOTE_REPO
+        echo "Successfully pushed!"
+    fi
     exit $2
 else
     echo "Everything looks good!"

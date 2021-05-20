@@ -11,5 +11,6 @@ jobs:
       - name: Run the Action
         id: mine
         uses: buddhist-uni/normalized-unicode-action@main
-      - name: Display the result
-        run: echo "Outcome=${{ steps.mine.outcome }} Conclusion=${{ steps.mine.conclusion }}"
+        with:
+            commit_fix: true
+
