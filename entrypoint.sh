@@ -19,7 +19,7 @@ echo "Found touched files: \"$TOUCHED_FILES\""
 if [ -z "$TOUCHED_FILES" ]; then
     echo "Didn't find any files modified by the last commit"
     echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
-    exit 0
+    exit 1
 fi
 
 for file in `isutf8 -i $TOUCHED_FILES`; do
