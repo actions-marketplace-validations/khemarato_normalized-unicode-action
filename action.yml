@@ -8,11 +8,11 @@ inputs:
   exit_code:
     description: 'What exit status code should it use if a file was found in need of normalization?'
     required: true
-    default: 1
+    default: 0
   commit_fix:
     description: 'If a problem is found, should the action automatically commit a fix?'
     required: true
-    default: false
+    default: true
   token:
     description: 'A personal access token for pushing the fix to the repo. Required if you want that push to trigger workflows'
     required: false

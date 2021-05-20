@@ -16,7 +16,7 @@ The name of the Unicode transliteration scheme you'd like to consider "normal".
 
 Whether it should automatically commit a fix for the offending file(s).
 
-**Default**: false
+**Default**: true
 
 ### `token`
 
@@ -32,13 +32,13 @@ Obviously, this is unnecessary if `commit_fix` is `false`.
  
 The exit status if a file is found in need of normalization
 
-**Default**: 1
+**Default**: 0
 
 ## Outputs
 
 ### Exit status
 
-Exits with code `exit_code` if there's an error, `0` otherwise.
+Exits with code `exit_code` if there was an unnormalized file, 1 if there was an error, and `0` otherwise.
 
 ## Example usage
 
@@ -46,21 +46,6 @@ Exits with code `exit_code` if there's an error, `0` otherwise.
 - uses: actions/checkout@v2
   with:
     fetch-depth: 2 # required, to only check files touched by the last commit
-- uses: buddhist-uni/normalized-unicode-action
-  with:
-    transliteration: Any-NFC
-    exit_code: 1
-    token: ${{ secrets.GITHUB_TOKEN }}
+- uses: buddhist-uni/normalized-unicode-action@v0.1-rc
 ```
-
- Decoded
-Unicode NFD 
-â
-Unicode NFKD    
-â
- Encoded
-Unicode NFC 
-â
-Unicode NFKC    
-â
 
