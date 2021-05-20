@@ -48,7 +48,7 @@ Exits with code `exit_code` if there's an error, `0` otherwise.
   with:
     transliteration: Any-NFC
     exit_code: 1
-    token: ${{ secrets.MY_GITHUB_TOKEN_SECRET }}
+    token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Unicode NFD 

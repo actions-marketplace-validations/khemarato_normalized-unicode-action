@@ -52,11 +52,18 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
     fi
 done
 
+TOKEN=$ACTIONS_RUNTIME_TOKEN
+if [[ ! -z "$INPUT_TOKEN" ]]; then
+    TOKEN=$INPUT_TOKEN
+    echo "Got a manually supplied token"
+else
+    echo "Attempting to use a default token..."
+fi
+
 if $modified; then
-    echo "Found files in need of modification!"
     if $3; then
         echo "Committing changes:"
-        REMOTE_REPO="https://${GITHUB_ACTOR}:${ACTIONS_RUNTIME_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        REMOTE_REPO="https://${GITHUB_ACTOR}:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git add .
@@ -71,7 +78,7 @@ if $modified; then
     fi
     exit $2
 else
-    echo "Everything looks good!"
+    echo "Everything looks good! No fix needed :)"
     exit 0
 fi
 
