@@ -61,7 +61,7 @@ if $modified; then
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git add .
         git commit -m "$COMMIT_PREFIX $1"
-        RESULT=`git push $REMOTE_REPO`
+        RESULT=$(git push $REMOTE_REPO 2>&1)
         if [[ $RESULT == *"fatal: "* ]]; then
             echo "Failed to push the fix!"
             echo "Use actions/checkout@v2 with \"persist-credentials: true\" OR pass me a personal access token."

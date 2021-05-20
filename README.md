@@ -20,9 +20,11 @@ Whether it should automatically commit a fix for the offending file(s).
 
 ### `token`
 
-If you're using `actions/checkout@v2` AND haven't manually set its `persist-credentials` to `false` AND would like commits from this action to **not** trigger another workflow run, then there's no need to set this parameter.
+If you're using `actions/checkout` AND haven't manually set its `persist-credentials` to `false` AND would like commits from this action to **not** trigger another workflow run, then there's no need to set this parameter.
 
 If you would like `actions/checkout` to *not* persist its credentials, OR if you would like this action's push to trigger a workflow, please set this parameter to a secret token.
+
+**Default**: pulls the Action Token from the checkout action
 
 ### `exit_code`
  
