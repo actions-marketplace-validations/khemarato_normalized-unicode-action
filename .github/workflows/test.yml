@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run the Action
         id: mine
-        uses: buddhist-uni/normalized-unicode-action@master
+        uses: buddhist-uni/normalized-unicode-action@v0.0-alpha
         with:
           transliteration: Any-NFC
       - name: Display the result
