@@ -1,6 +1,4 @@
-FROM ubuntu:latest
-
-RUN apt install libicu-dev
+FROM genzouw/uconv
 
 COPY entrypoint.sh /entrypoint.sh
 
