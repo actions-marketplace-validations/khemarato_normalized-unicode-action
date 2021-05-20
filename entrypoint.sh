@@ -6,7 +6,7 @@ if ! command -v uconv; then
     exit 1
 fi
 
-echo "\nUsing transliterator:\n\"$1\""
+echo "Using transliterator: \"$1\""
 TRANSLITS=`uconv -L`
 if [[ ${TRANSLITS} != *" $1 "* ]]; then
     echo "...except \"$1\" does not exist."
@@ -43,7 +43,9 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
 done
 
 if $modified; then
+    echo "Found files in need of modification:"
     git status
+    echo "Committing those changes now:"
     git commit -am "Fix naughty unicode files"
     git push --dry-run
     exit 1

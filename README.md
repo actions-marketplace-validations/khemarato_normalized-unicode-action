@@ -28,3 +28,14 @@ Exits with code `1` if there's an error, `0` otherwise.
   with:
     transliteration: Any-NFC
 ```
+
+Unicode NFD 
+â
+Unicode NFKD    
+â
+ Encoded
+Unicode NFC 
+â
+Unicode NFKC    
+â
+
