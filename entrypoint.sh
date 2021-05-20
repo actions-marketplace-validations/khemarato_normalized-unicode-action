@@ -30,7 +30,8 @@ TOUCHED_FILES=`git diff-tree --no-commit-id --name-only -r HEAD`
 if [ -z "$TOUCHED_FILES" ]; then
     echo "Didn't find any files modified by the last commit"
     echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
-    exit 1
+    echo "Or perhaps this was a merge commit... which I don't know how to handle..."
+    exit 0
 fi
 
 modified=false
