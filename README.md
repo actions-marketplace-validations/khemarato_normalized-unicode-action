@@ -20,11 +20,13 @@ Whether it should automatically commit a fix for the offending file(s).
 
 ### `token`
 
-If you're using `actions/checkout` AND haven't manually set its `persist-credentials` to `false` AND would like commits from this action to **not** trigger another workflow run, then there's no need to set this parameter.
+If you'd like the pushed fix here to trigger another workflow run, you'll have to set this to a personal access token.
 
-If you would like `actions/checkout` to *not* persist its credentials, OR if you would like this action's push to trigger a workflow, please set this parameter to a secret token.
+If you don't want its pushes to trigger another workflow run, then use either the `${{ secrets.GITHUB_TOKEN }}` or just use `actions/checkout@v2` which, by default, persists that credential down to later steps like this one.
 
-**Default**: pulls the Action Token from the checkout action
+Obviously, this is unnecessary if `commit_fix` is `false`.
+
+**Default**: Attempts to pull the Action Token from the checkout action
 
 ### `exit_code`
  
@@ -51,10 +53,11 @@ Exits with code `exit_code` if there's an error, `0` otherwise.
     token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+ Decoded
 Unicode NFD 
-â
+â
 Unicode NFKD    
-â
+â
  Encoded
 Unicode NFC 
 â
