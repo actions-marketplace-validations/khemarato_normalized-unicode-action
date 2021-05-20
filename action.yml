@@ -1,0 +1,12 @@
+name: 'Normalized Unicode'
+description: 'Checks for unnormalized Unicode and optionally commits a fix if needed.'
+inputs:
+  transliteration:  # id of input
+    description: 'The Unicode style you'd like to consider standard'
+    required: true
+    default: 'Any-NFC'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.transliteration }}

@@ -1,0 +1,15 @@
+on: [push]
+jobs:
+  helloworld:
+    runs-on: ubuntu-latest
+    name: Seeing if this works
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v2
+      - name: Run the Action
+        id: mine
+        uses: buddhist-uni/normalized-unicode-action
+        with:
+          transliteration: Any-NFC
+      - name: Display the result
+        run: echo "Outcome=${{ steps.mine.outcome }} Conclusion=${{ steps.mine.conclusion }}"
