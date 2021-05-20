@@ -16,7 +16,7 @@ IFS=$'\n'
 foundsomething=false
 TOUCHED_FILES=`git diff-tree --no-commit-id --name-only -r HEAD`
 echo "Found touched files: \"$TOUCHED_FILES\""
-if ! $TOUCHED_FILES; then
+if [ -z "$TOUCHED_FILES" ]; then
     echo "Didn't find any files modified by the last commit"
     echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
     exit 0
