@@ -36,7 +36,8 @@ fi
 
 modified=false
 IFS=$'\n'
-for file in `isutf8 -i $TOUCHED_FILES`; do
+for file in $TOUCHED_FILES; do
+  if [[ -z `isutf8 $file` ]]; then
     if [ -f $file ]; then
         echo "Analyzing \"$file\"..."
         uconv -x "$1" "$file" > $HOME/tmp
@@ -51,6 +52,7 @@ for file in `isutf8 -i $TOUCHED_FILES`; do
     else
         echo "Looked for but couldn't find \"$file\". Perhaps it was removed by that commit?"
     fi
+  fi
 done
 
 TOKEN=$ACTIONS_RUNTIME_TOKEN
