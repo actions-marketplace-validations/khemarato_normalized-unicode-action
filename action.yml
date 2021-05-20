@@ -1,5 +1,7 @@
 name: 'Normalized Unicode'
 description: 'Checks for unnormalized Unicode and optionally commits a fix if needed.'
+icon: underline
+color: blue
 inputs:
   transliteration:  # id of input
     description: 'The Unicode style you would like to consider standard'

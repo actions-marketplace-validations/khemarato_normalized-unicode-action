@@ -46,6 +46,6 @@ Exits with code `exit_code` if there was an unnormalized file, 1 if there was an
 - uses: actions/checkout@v2
   with:
     fetch-depth: 2 # required, to only check files touched by the last commit
-- uses: buddhist-uni/normalized-unicode-action@v0.1-rc
+- uses: buddhist-uni/normalized-unicode-action@v0.1
 ```
 
