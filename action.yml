@@ -2,7 +2,7 @@ name: 'Normalized Unicode'
 description: 'Checks for unnormalized Unicode and optionally commits a fix if needed.'
 inputs:
   transliteration:  # id of input
-    description: 'The Unicode style you'd like to consider standard'
+    description: 'The Unicode style you would like to consider standard'
     required: true
     default: 'Any-NFC'
 runs:
