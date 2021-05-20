@@ -11,16 +11,20 @@ else
 fi
 
 cd $GITHUB_WORKSPACE
-echo "Now in $GITHUB_WORKSPACE"
 
-git show
-
-# IFS=$'\n'
+IFS=$'\n'
+foundsomething=false
 for file in `git diff-tree --no-commit-id --name-only -r HEAD`; do
+    foundsomething=true
     if [ -f $file ]; then
         echo "Found \"$file\""
     else
         echo "Looked for but couldn't find \"$file\". Perhaps it was removed by that commit?"
     fi
 done
+
+if ! $foundsomething; then
+    echo "Didn't find any files modified by the last commit!"
+    echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
+fi
 
