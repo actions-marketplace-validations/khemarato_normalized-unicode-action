@@ -43,9 +43,9 @@ Exits with code `exit_code` if there's an error, `0` otherwise.
 ```
 
 Unicode NFD 
-â
+â
 Unicode NFKD    
-â
+â
  Encoded
 Unicode NFC 
 â
