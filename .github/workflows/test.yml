@@ -15,5 +15,6 @@ jobs:
         with:
             commit_fix: true
             exit_code: 0
+            token: ${{ secrets.GITHUB_TOKEN }}
 
 

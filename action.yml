@@ -13,6 +13,9 @@ inputs:
     description: 'If a problem is found, should the action automatically commit a fix?'
     required: true
     default: false
+  token:
+    description: 'A personal access token for pushing the fix to the repo. Required if you want that push to trigger workflows'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

@@ -64,7 +64,7 @@ if $modified; then
         RESULT=$(git push $REMOTE_REPO 2>&1)
         if [[ $RESULT == *"fatal: "* ]]; then
             echo "Failed to push the fix!"
-            echo "Use actions/checkout@v2 with \"persist-credentials: true\" OR pass me a personal access token."
+            echo "Use actions/checkout (@v2 with \"persist-credentials: true\") OR pass me a personal access \"token\"."
             exit 1
         fi
         echo "Successfully pushed!"
