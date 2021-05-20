@@ -1,6 +1,6 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
-RUN apt-get install icu-devtools
+RUN apk add --no-cache --no-progress icu
 
 COPY entrypoint.sh /entrypoint.sh
 
