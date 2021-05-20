@@ -1,4 +1,6 @@
-FROM genzouw/uconv
+FROM ubuntu:latest
+
+RUN apt-get install icu-devtools
 
 COPY entrypoint.sh /entrypoint.sh
 
