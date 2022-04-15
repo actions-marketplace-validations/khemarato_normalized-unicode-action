@@ -18,6 +18,9 @@ if [[ ${TRANSLITS} != *" $1 "* ]]; then
     exit 1
 fi
 
+# Workaround for https://github.com/actions/checkout/issues/766
+git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
 cd $GITHUB_WORKSPACE
 
 LAST_COMMIT_MSG=`git log --format=%B -n 1 HEAD`
