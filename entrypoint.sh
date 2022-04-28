@@ -18,10 +18,18 @@ if [[ ${TRANSLITS} != *" $1 "* ]]; then
     exit 1
 fi
 
+TOKEN="$ACTIONS_RUNTIME_TOKEN"
+if [[ ! -z "$INPUT_TOKEN" ]]; then
+    TOKEN="$INPUT_TOKEN"
+    echo "Got a manually supplied token."
+else
+    echo "Will use the default ACTIONS_RUNTIME_TOKEN."
+fi
+
 # Workaround for https://github.com/actions/checkout/issues/766
 git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-cd $GITHUB_WORKSPACE
+cd "$GITHUB_WORKSPACE"
 
 LAST_COMMIT_MSG=`git log --format=%B -n 1 HEAD`
 if [[ ${LAST_COMMIT_MSG} == *"$COMMIT_PREFIX"* ]]; then
@@ -29,11 +37,10 @@ if [[ ${LAST_COMMIT_MSG} == *"$COMMIT_PREFIX"* ]]; then
     exit 0
 fi
 
-TOUCHED_FILES=`git diff-tree --no-commit-id --name-only -r HEAD`
+TOUCHED_FILES=`git diff-tree --no-commit-id --diff-filter=d --diff-merges=1 --name-only -r HEAD`
 if [ -z "$TOUCHED_FILES" ]; then
     echo "Didn't find any files modified by the last commit"
     echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
-    echo "Or perhaps this was a merge commit... which I don't know how to handle..."
     exit 0
 fi
 
@@ -53,21 +60,14 @@ for file in $TOUCHED_FILES; do
             modified=true
         fi
     else
-        echo "Looked for but couldn't find \"$file\". Perhaps it was removed by that commit?"
+        echo "Looked for but couldn't find \"$file\"."
+        exit 1
     fi
   fi
 done
 
-TOKEN=$ACTIONS_RUNTIME_TOKEN
-if [[ ! -z "$INPUT_TOKEN" ]]; then
-    TOKEN=$INPUT_TOKEN
-    echo "Got a manually supplied token"
-else
-    echo "Attempting to use a default token..."
-fi
-
 if $modified; then
-    if $3; then
+    if "$3"; then
         echo "Committing changes:"
         REMOTE_REPO="https://${GITHUB_ACTOR}:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git config user.name "${GITHUB_ACTOR}"
@@ -75,7 +75,7 @@ if $modified; then
         git add .
         git commit -m "$COMMIT_PREFIX $1"
         RESULT=$(git push $REMOTE_REPO 2>&1)
-        if [[ $RESULT == *"fatal: "* ]]; then
+        if [[ "$RESULT" == *"fatal: "* ]]; then
             echo "Failed to push the fix!"
             echo "Use actions/checkout (@v2 with \"persist-credentials: true\") OR pass me a personal access \"token\"."
             exit 1
