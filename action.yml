@@ -9,6 +9,10 @@ inputs:
     description: 'The Unicode style you would like to consider standard'
     required: true
     default: 'Any-NFC'
+  check_all:
+    description: 'Should it check all files in the repro instead of just the files touched by the last commit?'
+    required: true
+    default: false
   exit_code:
     description: 'What exit status code should it use if a file was found in need of normalization?'
     required: true
@@ -27,4 +31,5 @@ runs:
     - ${{ inputs.transliteration }}
     - ${{ inputs.exit_code }}
     - ${{ inputs.commit_fix }}
+    - ${{ inputs.check_all }}
 

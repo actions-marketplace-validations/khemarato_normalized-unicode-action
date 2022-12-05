@@ -37,11 +37,15 @@ if [[ ${LAST_COMMIT_MSG} == *"$COMMIT_PREFIX"* ]]; then
     exit 0
 fi
 
-TOUCHED_FILES=`git diff-tree --no-commit-id --diff-filter=d --diff-merges=1 --name-only -r HEAD`
-if [ -z "$TOUCHED_FILES" ]; then
+if "$4"; then
+  TOUCHED_FILES=`git ls-files`
+else
+  TOUCHED_FILES=`git diff-tree --no-commit-id --diff-filter=d --diff-merges=1 --name-only -r HEAD`
+  if [ -z "$TOUCHED_FILES" ]; then
     echo "Didn't find any files modified by the last commit"
     echo "Perhaps you forgot to set checkout:fetch-depth to 2?"
     exit 0
+  fi
 fi
 
 modified=false
