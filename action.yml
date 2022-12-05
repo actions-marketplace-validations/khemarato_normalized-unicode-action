@@ -25,11 +25,8 @@ inputs:
     description: 'A personal access token for pushing the fix to the repo. Required if you want that push to trigger workflows'
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.transliteration }}
-    - ${{ inputs.exit_code }}
-    - ${{ inputs.commit_fix }}
-    - ${{ inputs.check_all }}
+  using: 'composite'
+  steps:
+    - run: $GITHUB_ACTION_PATH/entrypoint.sh ${{ inputs.transliteration }} ${{ inputs.exit_code }} ${{ inputs.commit_fix }} ${{ inputs.check_all }}
+      shell: bash
 
