@@ -69,9 +69,9 @@ for file in $TOUCHED_FILES; do
             mv -f $HOME/tmp "$file"
             modified=true
           fi
-	else
+        else
           echo "There was a problem converting $file. Is it really unicode?"
-	fi
+        fi
     else
         echo "Looked for but couldn't find \"$file\"."
         exit 1
