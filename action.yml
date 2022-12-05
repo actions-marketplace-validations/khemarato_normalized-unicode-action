@@ -27,7 +27,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: sudo apt-get install moreutils
+    - run: |
+        mkdir -p "$HOME/.local/bin"
+        cd "$HOME/.local/bin"
+        wget https://raw.githubusercontent.com/madx/moreutils/master/isutf8.c
+        gcc isutf8.c -o isutf8
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
       shell: bash
     - run: $GITHUB_ACTION_PATH/entrypoint.sh ${{ inputs.transliteration }} ${{ inputs.exit_code }} ${{ inputs.commit_fix }} ${{ inputs.check_all }}
       shell: bash
