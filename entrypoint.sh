@@ -32,7 +32,7 @@ git config --global --add safe.directory "$GITHUB_WORKSPACE"
 cd "$GITHUB_WORKSPACE"
 
 LAST_COMMIT_MSG=`git log --format=%B -n 1 HEAD`
-if [[ ${LAST_COMMIT_MSG} == *"$COMMIT_PREFIX"* ]]; then
+if [[ ${LAST_COMMIT_MSG} == "$COMMIT_PREFIX"* ]]; then
     echo "Last commit is one of mine! Nvm :)"
     exit 0
 fi
