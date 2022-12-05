@@ -10,6 +10,12 @@ if ! command -v uconv; then
     exit 1
 fi
 
+echo "Using Unicode finder at:"
+if ! command -v isutf8; then
+    echo "Please install the isutf8 command"
+    exit 1
+fi
+
 echo "Using transliterator: \"$1\""
 TRANSLITS=`uconv -L`
 if [[ ${TRANSLITS} != *" $1 "* ]]; then
@@ -51,18 +57,21 @@ fi
 modified=false
 IFS=$'\n'
 for file in $TOUCHED_FILES; do
-  if [[ -z `isutf8 $file` ]]; then
-    if [ -f $file ]; then
+  if [[ -z `isutf8 "$file"` ]]; then
+    if [ -f "$file" ]; then
         echo "Analyzing \"$file\"..."
-        uconv -x "$1" "$file" > $HOME/tmp
-        if cmp -s $HOME/tmp "$file"; then
+        if uconv -x "$1" "$file" > $HOME/tmp; then
+          if cmp -s $HOME/tmp "$file"; then
             rm $HOME/tmp
             echo "...okay"
-        else
+          else
             echo "...IN NEED OF NORMALIZATION"
             mv -f $HOME/tmp "$file"
             modified=true
-        fi
+          fi
+	else
+          echo "There was a problem converting $file. Is it really unicode?"
+	fi
     else
         echo "Looked for but couldn't find \"$file\"."
         exit 1
