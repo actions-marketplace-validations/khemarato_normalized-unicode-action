@@ -27,6 +27,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: sudo apt-get install moreutils
+      shell: bash
     - run: $GITHUB_ACTION_PATH/entrypoint.sh ${{ inputs.transliteration }} ${{ inputs.exit_code }} ${{ inputs.commit_fix }} ${{ inputs.check_all }}
       shell: bash
 
