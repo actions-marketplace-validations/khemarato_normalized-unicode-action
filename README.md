@@ -1,8 +1,10 @@
 # Normalized Unicode
 
-A GitHub Docker Action that checks recently committed source files for Unicode Normalization and optionally fixes any errors.
+A GitHub Action that checks committed source files for Unicode Normalization and optionally fixes any errors.
 
-This action requires the `checkout` action be run before it with a depth of 2, and uses the [`uconv`](https://linux.die.net/man/1/uconv) command under the hood.
+This action **must be run on Ubuntu** and requires the `checkout` action be run before it with a depth of >=2 (unless the `check_all` option is `true`).
+
+It uses the [`uconv`](https://linux.die.net/man/1/uconv) command under the hood.
 
 ## Inputs
 
@@ -17,6 +19,14 @@ The name of the Unicode transliteration scheme you'd like to consider "normal".
 Whether it should automatically commit a fix for the offending file(s).
 
 **Default**: true
+
+### `check_all`
+
+Whether it should check all files in the repo instead of just the files touched by the most recent commit
+
+**Default**: false
+
+NOTE: This must be `true` if you don't tell `actions/checkout` to fetch depth >1
 
 ### `token`
 
@@ -46,6 +56,6 @@ Exits with code `exit_code` if there was an unnormalized file, 1 if there was an
 - uses: actions/checkout@v2
   with:
     fetch-depth: 2 # required, to only check files touched by the last commit
-- uses: buddhist-uni/normalized-unicode-action@v0.1
+- uses: buddhist-uni/normalized-unicode-action@v1
 ```
 
